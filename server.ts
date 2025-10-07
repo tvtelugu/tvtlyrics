@@ -2,8 +2,9 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import useragent from 'useragent';
 
-import router from './router/router';
-
+import musixmatch from './search_engine/musixmatch/router';
+import genius from './search_engine/genius/router';
+import youtube from './search_engine/youtube/router';
 import log from "./utils/logger";
 
 const app = express();
@@ -21,7 +22,9 @@ function logDetails(req: Request, res: Response, next: NextFunction) {
 }
 
 app.use(logDetails);
-app.use(router);
+app.use(musixmatch);
+app.use(genius);
+app.use(youtube);
 
 app.get('/', async (req, res) => {
   res.sendFile(path.join(__dirname, 'documentation', 'index.html'));
